@@ -43,7 +43,7 @@ following script:
 
 It will blow away the example_visualized/build directory (if it exists) and create a new one,
 populated with all the XML files output by Doxygen, including index.xml. Additionally, it will
-insert a copy of index.xml into example_visualized (which you can customize for partial builds).
+copy index.xml to example_visualized/custom-index.xml (which you can customize for partial builds).
 If the script fails, you probably will need to modify it, specifically the hard-coded path of
 the build dir used by Boost.Build for the regular "example" build.
 
@@ -74,13 +74,13 @@ NOTE: The stage-two visualizations have become the most time-consuming to genera
 I suspect that ./non-traced-build.sh or ./stage1-trace-only.sh is what you will want to invoke instead of
 ./run-all.sh (see the sections about this below).
 
-## Running a partial build (editing index.xml)
-If you want to only do a partial build, edit the copy of index.xml in the example_visualized directory
+## Running a partial build (editing custom-index.xml)
+If you want to only do a partial build, edit the custom-index.xml in the example_visualized directory
 and then comment out everything but the pages you want to include in the build. The
 extract-xml-pages.sh script (invoked automatically by run-all.sh) will overwrite build/index.xml with your
-modified index.xml, using it as input instead. (For that reason, you may want to comment things out so you
+modified custom-index.xml, using it as input instead. (For that reason, you may want to comment things out so you
 can easily uncomment them later, without having to retrieve the Doxygen output again.) After you've created
-your pared-down index.xml, simply run run-all.sh again to generate only those pages.
+your pared-down custom-index.xml, simply run run-all.sh again to generate only those pages.
 
 ## Including previously-built pages in the HTML output
 The aforementioned extract-xml-pages.sh script generates all of the input XML "page" files that are
@@ -88,16 +88,16 @@ used as input to stage 1 of the page rendering. It also generates a hierarchical
 in build/xml-pages.xml. This, in turn, is used by assemble-quickbook.sh (automatically invoked by run-all.sh),
 to pull all of the reference pages (rendered as QuickBook) together into reference.qbk. If you want to
 include previously-built reference pages into reference.qbk even after switching to a different partial
-build (by editing your custom index.xml), you can do this by also supplying a custom xml-pages.xml file
+build (by editing your custom-index.xml), you can do this by also supplying a custom xml-pages.xml file
 in the example_visualized directory (e.g. the result of a full build from earlier, at build/xml-pages.xml).
 The assemble-quickbook.sh script will overwrite build/xml-pages.xml with your modified xml-pages.xml,
-using it as input instead. (Unlike index.xml, xml-pages.xml gets regenerated every time you run run-all.sh.)
+using it as input instead. (Unlike build/index.xml, build/xml-pages.xml gets regenerated every time you run run-all.sh.)
 The purpose of doing this would be, for example, to always get a full build of the HTML docs (for example,
 to test links between all the pages) without having to rebuild the QuickBook (and XSLT visualizations)
 for all the reference pages every time.
 
 However, if you want the fastest build possible (to repeatedly render just a subset of the reference pages),
-you're best off not using a custom xml-pages.xml file. Just whittling down index.xml to a small subset will
+you're best off not using a custom xml-pages.xml file. Just whittling down custom-index.xml to a small subset will
 give you the fastest build.
 
 # Running a build without visualizations (one master script)

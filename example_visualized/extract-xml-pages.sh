@@ -1,5 +1,5 @@
-echo "Copying a custom (manually-slimmed-down) index.xml if present..."
-cp ../index.xml .
+echo "Copying a custom, manually-slimmed-down index (custom-index.xml), if present..."
+cp ../custom-index.xml index.xml
 
 echo "Removing the previously-extracted XML pages (xml-pages directory)..."
 rm -rf xml-pages
